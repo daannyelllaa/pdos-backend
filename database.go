@@ -9,10 +9,15 @@ import (
 var DB *sql.DB
 
 func ConnectDB() error {
-	pswd := os.Getenv("MYSQL_PASSWORD")
+	host := os.Getenv("MYSQL_HOST")
+	user := os.Getenv("MYSQL_USER")
+	password := os.Getenv("MYSQL_ROOT_PASSWORD")
+	dbname := os.Getenv("MYSQL_DATABASE")
+	port := os.Getenv("MYSQL_PORT")
+
 	dsn := fmt.Sprintf(
-		"root:%s@tcp(127.0.0.1:3306)/pdos_system?charset=utf8mb4",
-		pswd,
+		"%s:%s@tcp(%s:%s)/%s?parseTime=true",
+		user, password, host, port, dbname,
 	)
 
 	db, err := sql.Open("mysql", dsn)
